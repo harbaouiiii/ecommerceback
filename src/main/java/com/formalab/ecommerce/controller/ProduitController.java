@@ -58,7 +58,7 @@ public class ProduitController {
     }
 
     @PutMapping(value="/produit/{id}/{prix}")
-    public void updatePrix(@PathVariable Integer id, @PathVariable Double prix){
+    public void updatePrix(@PathVariable Integer id,@PathVariable Double prix){
         produitRepository.updatePrix(id,prix);
     }
 
