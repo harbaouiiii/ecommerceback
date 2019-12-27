@@ -22,12 +22,6 @@ public class Categorie {
         super();
     }
 
-    public Categorie(Integer id,String nom) {
-        this.id=id;
-        this.nom=nom;
-    }
-
-
     public Integer getId() {
         return id;
     }
@@ -37,7 +31,7 @@ public class Categorie {
     }
 
     public void setNom(String nom) {
-        this.nom = nom;
+        this.nom = nom.substring(0,1).toUpperCase() + nom.substring(1).toLowerCase();
     }
 
     public List<Produit> getProduits() {

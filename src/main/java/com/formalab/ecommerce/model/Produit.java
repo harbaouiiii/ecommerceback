@@ -24,15 +24,7 @@ public class Produit {
     public Produit() {
         super();
     }
-
-    public Produit(Integer id,String nom, double prixAchat, double prixVente, Categorie categorie) {
-        this.id=id;
-        this.nom = nom;
-        this.prixAchat = prixAchat;
-        this.prixVente = prixVente;
-        this.categorie = categorie;
-    }
-
+    
     public Integer getId() {
         return id;
     }
@@ -42,7 +34,7 @@ public class Produit {
     }
 
     public void setNom(String nom) {
-        this.nom = nom;
+        this.nom = nom.substring(0,1).toUpperCase() + nom.substring(1).toLowerCase();
     }
 
     public double getPrixAchat() {
