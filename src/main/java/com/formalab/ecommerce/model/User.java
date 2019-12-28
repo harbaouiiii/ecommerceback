@@ -1,7 +1,5 @@
 package com.formalab.ecommerce.model;
 
-
-
 import java.util.HashSet;
 import java.util.Set;
  
@@ -31,19 +29,19 @@ import org.hibernate.annotations.NaturalId;
         })
 })
 public class User{
-  @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
  
     @NotBlank
     @Size(min=3, max = 50)
     private String name;
- 
+
+    @NaturalId
     @NotBlank
     @Size(min=3, max = 50)
     private String username;
- 
-    @NaturalId
+
     @NotBlank
     @Size(max = 50)
     @Email
@@ -56,7 +54,8 @@ public class User{
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles", 
       joinColumns = @JoinColumn(name = "user_id"), 
-      inverseJoinColumns = @JoinColumn(name = "role_id"))
+      inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
     private Set<Role> roles = new HashSet<>();
  
     public User() {}
