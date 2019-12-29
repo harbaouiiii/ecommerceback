@@ -3,6 +3,8 @@ package com.formalab.ecommerce.controller;
 import com.formalab.ecommerce.dao.ProduitRepository;
 import com.formalab.ecommerce.model.Categorie;
 import com.formalab.ecommerce.model.Produit;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Api(description = "gestion des produit")
 @RestController
 @RequestMapping(value="/rest/api")
 @CrossOrigin(origins = "http://localhost:4200")
@@ -22,6 +25,7 @@ public class ProduitController {
     @Autowired
     ProduitRepository produitRepository;
 
+    @ApiOperation("consulter tout les produits")
     @GetMapping(value="/allProduit")
     public List<Produit> allProduit(){
         return produitRepository.findAll();
@@ -33,6 +37,7 @@ public class ProduitController {
         return ResponseEntity.ok().body(produit);
     }
 
+    @ApiOperation("consulter tout les produits")
     @PostMapping(value="/addProduit")
     @PreAuthorize("hasRole('admin') or hasRole('pm')")
     public Produit addProduit(@Valid @RequestBody Produit produit){
@@ -47,8 +52,8 @@ public class ProduitController {
         produit.setPrixAchat(produitDetails.getPrixAchat());
         produit.setPrixVente(produitDetails.getPrixVente());
         produit.setCategorie(produitDetails.getCategorie());
-        final Produit updatedProduit = produitRepository.save(produit);
-        return ResponseEntity.ok(updatedProduit);
+        produitRepository.save(produit);
+        return ResponseEntity.ok(produit);
     }
 
     @DeleteMapping(value="/produit/{id}")
