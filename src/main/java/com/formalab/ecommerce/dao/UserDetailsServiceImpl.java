@@ -7,8 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.formalab.ecommerce.model.*;
-import com.formalab.ecommerce.dao.UserRepository;
+import com.formalab.ecommerce.model.User;
 
  
 @Service
