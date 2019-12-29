@@ -5,6 +5,7 @@ import com.formalab.ecommerce.model.Categorie;
 import com.formalab.ecommerce.model.Produit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -33,11 +34,13 @@ public class ProduitController {
     }
 
     @PostMapping(value="/addProduit")
+    @PreAuthorize("hasRole('admin') or hasRole('pm')")
     public Produit addProduit(@Valid @RequestBody Produit produit){
         return produitRepository.save(produit);
     }
 
     @PutMapping(value="/produit/{id}")
+    @PreAuthorize("hasRole('admin') or hasRole('pm')")
     public ResponseEntity<Produit> updateProduit(@PathVariable Integer id, @Valid @RequestBody Produit produitDetails) throws Exception{
         Produit produit = produitRepository.findById(id).orElseThrow(()->new Exception("Le produit n'existe pas"));
         produit.setNom(produitDetails.getNom());
@@ -49,6 +52,7 @@ public class ProduitController {
     }
 
     @DeleteMapping(value="/produit/{id}")
+    @PreAuthorize("hasRole('admin') or hasRole('pm')")
     public Map<String,Boolean> deleteProduit(@PathVariable Integer id) throws Exception{
         Produit produit = produitRepository.findById(id).orElseThrow(()->new Exception("Le produit n'existe pas"));
         produitRepository.delete(produit);
@@ -58,6 +62,7 @@ public class ProduitController {
     }
 
     @PutMapping(value="/produit/{id}/{prix}")
+    @PreAuthorize("hasRole('admin') or hasRole('pm')")
     public void updatePrix(@PathVariable Integer id,@PathVariable Double prix){
         produitRepository.updatePrix(id,prix);
     }
