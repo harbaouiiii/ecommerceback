@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.formalab.ecommerce.model.Role;
 import com.formalab.ecommerce.model.RoleName;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
  
 @Repository

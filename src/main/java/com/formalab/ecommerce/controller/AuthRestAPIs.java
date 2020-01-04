@@ -94,4 +94,5 @@ public class AuthRestAPIs {
         userRepository.save(user);
         return ResponseEntity.ok().body("User registered successfully!");
     }
+
 }
