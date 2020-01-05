@@ -16,7 +16,7 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
- 
+
 import org.hibernate.annotations.NaturalId;
  
 @Entity
@@ -51,8 +51,7 @@ public class User{
     @Size(min=6, max = 100)
     private String password;
 
-    @NotBlank
-
+    private Boolean etat;
  
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles", 
@@ -68,6 +67,7 @@ public class User{
         this.username = username;
         this.email = email;
         this.password = password;
+        this.etat=false;
     }
  
     public Long getId() {
@@ -116,5 +116,13 @@ public class User{
  
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public Boolean getEtat() {
+        return etat;
+    }
+
+    public void setEtat(Boolean etat) {
+        this.etat = etat;
     }
 }

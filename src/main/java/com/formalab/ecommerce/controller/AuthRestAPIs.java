@@ -1,10 +1,12 @@
 package com.formalab.ecommerce.controller;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
  
 import javax.validation.Valid;
 
+import com.fasterxml.jackson.databind.util.JSONWrappedObject;
 import com.formalab.ecommerce.configuration.JwtProvider;
 import com.formalab.ecommerce.dao.RoleRepository;
 import com.formalab.ecommerce.dao.UserRepository;
@@ -16,6 +18,7 @@ import com.formalab.ecommerce.model.RoleName;
 import com.formalab.ecommerce.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -43,28 +46,37 @@ public class AuthRestAPIs {
     PasswordEncoder encoder;
     @Autowired
     JwtProvider jwtProvider;
- 
+
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginForm loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getUsername(),
                         loginRequest.getPassword()
+
                 )
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtProvider.generateJwtToken(authentication);
+
+        Optional<User> user = userRepository.findByUsername(loginRequest.getUsername());
+        User userdetails = user.get();
+
+        if(!userdetails.getEtat()){
+            return ResponseEntity.ok("Not activated");
+        }
+
         return ResponseEntity.ok(new JwtResponse(jwt));
     }
  
-    @PostMapping("/signup")
-    public ResponseEntity<String> registerUser(@Valid @RequestBody SignUpForm signUpRequest) {
-        if(userRepository.existsByUsername(signUpRequest.getUsername())) {
-            return new ResponseEntity<String>("Fail -> Username is already taken!",
+    @PostMapping(value = "/signup")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpForm signUpRequest) {
+       if(userRepository.existsByUsername(signUpRequest.getUsername())) {
+            return new ResponseEntity<>("Username is already taken!",
                     HttpStatus.BAD_REQUEST);
         }
         if(userRepository.existsByEmail(signUpRequest.getEmail())) {
-            return new ResponseEntity<String>("Fail -> Email is already in use!",
+            return new ResponseEntity<>("Email is already in use!",
                     HttpStatus.BAD_REQUEST);
         }
         // Creating user's account
@@ -92,7 +104,7 @@ public class AuthRestAPIs {
         });
         user.setRoles(roles);
         userRepository.save(user);
-        return ResponseEntity.ok().body("User registered successfully!");
-    }
 
+        return ResponseEntity.ok("User Registred !");
+    }
 }

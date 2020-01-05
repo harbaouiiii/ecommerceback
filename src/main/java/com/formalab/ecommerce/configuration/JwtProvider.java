@@ -32,6 +32,7 @@ public class JwtProvider {
                     .setExpiration(new Date((new Date()).getTime() + jwtExpiration))
                     .signWith(SignatureAlgorithm.HS512, jwtSecret)
                     .claim("roles", userPrincipal.getAuthorities().toString())
+                    .claim("etat", userPrincipal.getEtat())
                     .compact();
     }
  

@@ -22,6 +22,8 @@ public class SignUpForm {
     @NotBlank
     @Size(min = 6, max = 40)
     private String password;
+
+    private Boolean etat;
  
     public String getName() {
         return name;
@@ -61,5 +63,13 @@ public class SignUpForm {
     
     public void setRole(Set<String> role) {
       this.role = role;
+    }
+
+    public Boolean getEtat() {
+        return etat;
+    }
+
+    public void setEtat() {
+        this.etat = Boolean.FALSE;
     }
 }
