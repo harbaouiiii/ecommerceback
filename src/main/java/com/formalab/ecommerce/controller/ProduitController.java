@@ -39,13 +39,13 @@ public class ProduitController {
 
     @ApiOperation("consulter tout les produits")
     @PostMapping(value="/addProduit")
-    @PreAuthorize("hasRole('admin') or hasRole('pm')")
+    //@PreAuthorize("hasRole('admin') or hasRole('pm')")
     public Produit addProduit(@Valid @RequestBody Produit produit){
         return produitRepository.save(produit);
     }
 
     @PutMapping(value="/produit/{id}")
-    @PreAuthorize("hasRole('admin') or hasRole('pm')")
+    //@PreAuthorize("hasRole('admin') or hasRole('pm')")
     public ResponseEntity<Produit> updateProduit(@PathVariable Integer id, @Valid @RequestBody Produit produitDetails) throws Exception{
         Produit produit = produitRepository.findById(id).orElseThrow(()->new Exception("Le produit n'existe pas"));
         produit.setNom(produitDetails.getNom());
@@ -57,7 +57,7 @@ public class ProduitController {
     }
 
     @DeleteMapping(value="/produit/{id}")
-    @PreAuthorize("hasRole('admin') or hasRole('pm')")
+    //@PreAuthorize("hasRole('admin') or hasRole('pm')")
     public Map<String,Boolean> deleteProduit(@PathVariable Integer id) throws Exception{
         Produit produit = produitRepository.findById(id).orElseThrow(()->new Exception("Le produit n'existe pas"));
         produitRepository.delete(produit);
@@ -67,7 +67,7 @@ public class ProduitController {
     }
 
     @PutMapping(value="/produit/{id}/{prix}")
-    @PreAuthorize("hasRole('admin') or hasRole('pm')")
+    //@PreAuthorize("hasRole('admin') or hasRole('pm')")
     public void updatePrix(@PathVariable Integer id,@PathVariable Double prix){
         produitRepository.updatePrix(id,prix);
     }

@@ -27,7 +27,7 @@ public class CategorieController {
     }
 
     @PostMapping(value="/addCategorie")
-    @PreAuthorize("hasRole('admin') or hasRole('pm')")
+    //@PreAuthorize("hasRole('admin') or hasRole('pm')")
     public Categorie addCategorie(@Valid @RequestBody Categorie c){
         return categorieRepository.save(c);
     }
@@ -39,7 +39,7 @@ public class CategorieController {
     }
 
     @PutMapping(value="/categorie/{id}")
-    @PreAuthorize("hasRole('admin') or hasRole('pm')")
+    //@PreAuthorize("hasRole('admin') or hasRole('pm')")
     public ResponseEntity<Categorie> updateCategorie(@PathVariable Integer id,@Valid @RequestBody Categorie catDetails) throws Exception{
         Categorie c = categorieRepository.findById(id).orElseThrow(()->new Exception("La catégorie n'existe pas"));
         c.setNom(catDetails.getNom());
@@ -48,7 +48,7 @@ public class CategorieController {
     }
 
     @DeleteMapping(value="/categorie/{id}")
-    @PreAuthorize("hasRole('admin') or hasRole('pm')")
+    //@PreAuthorize("hasRole('admin') or hasRole('pm')")
     public Map<String,Boolean> deleteCategorie(@PathVariable Integer id) throws Exception {
         Categorie cat = categorieRepository.findById(id).orElseThrow(()->new Exception("La catégorie n'existe pas"));
         categorieRepository.delete(cat);
